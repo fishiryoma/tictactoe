@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+#app {
+  background-color: #565957;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+}
+
+#app table {
+  align-self: center;
+  border-collapse: collapse;
+  position: relative;
+}
+
+#app table tr td:not(:last-child) {
+  border-right: 12px solid rgba(255, 255, 255, 0.5);
+}
+
+#app table tr:not(:last-child) td {
+  border-bottom: 12px solid rgba(255, 255, 255, 0.5);
+}
+
+#app table tr td {
+  height: 120px;
+  width: 120px;
+  text-align: center;
+}
+
+#app table tr td div {
+  font-size: 80px;
+  font-weight: 700;
+}
+
+#app table tr td .circle::after {
+  content: "Ｏ";
+  color: rgba(121, 247, 207, 0.6);
+}
+
+#app table tr td .cross::after {
+  content: "X";
+  color: rgba(255, 115, 50, 0.6);
+}
+
+.visible {
+  visibility: hidden;
+}
+
+.start-game {
+  /* visibility: hidden; */
+  position: absolute;
+  transform: translate(0, -50%);
+  z-index: 1;
+  top: 50%;
+  background-color: #565957;
+  color: #f8f9fa;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  letter-spacing: 2px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.start-game:hover {
+  color: #dee2e6;
+}
+
+.msg {
+  /* visibility: hidden; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  transform: translate(0, -50%);
+  z-index: 1;
+  top: 50%;
+  width: 20%;
+  height: 30%;
+  background-color: rgb(255, 255, 255, 0.8);
+  font-size: 54px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-radius: 10px;
+}
+
+.msg p {
+  margin: auto;
+  transform: translate(0, 30%);
+}
+
+.play-again {
+  font-size: 18px;
+  padding-bottom: 15px;
+  cursor: pointer;
+}

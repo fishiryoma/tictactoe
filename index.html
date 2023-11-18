@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Tic Tac Toe</title>
+  </head>
+  <body>
+    <div id="app">
+      <table>
+        <tr>
+          <td data-index="1">
+            <!-- 插入OX文字 -->
+          </td>
+          <td data-index="2"></td>
+          <td data-index="3"></td>
+        </tr>
+        <tr>
+          <td data-index="4"></td>
+          <td data-index="5"></td>
+          <td data-index="6"></td>
+        </tr>
+        <tr>
+          <td data-index="7"></td>
+          <td data-index="8"></td>
+          <td data-index="9"></td>
+        </tr>
+        <button class="start-game btn-start">START</button>
+        <div class="win-msg msg visible">
+          <p>YOU WIN</p>
+          <div class="play-again">PLAY AGAIN</div>
+        </div>
+        <div class="lose-msg msg visible">
+          <p>YOU LOSE</p>
+          <div class="play-again">PLAY AGAIN</div>
+        </div>
+        <div class="tie-msg msg visible" visible>
+          <p>TIE</p>
+          <div class="play-again">PLAY AGAIN</div>
+        </div>
+      </table>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

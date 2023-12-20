@@ -1,0 +1,117 @@
+body {
+  margin: 0;
+  font-family: "Yusei Magic", sans-serif;
+  background-color: #8acdd7;
+}
+
+%position-medium {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.visible {
+  visibility: hidden;
+}
+
+#app {
+  width: 400px;
+  margin: 60px auto;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 0 1px 8px rgb(50, 50, 45, 0.3);
+  position: relative;
+  h1 {
+    color: #32322d;
+    font-size: 50px;
+    letter-spacing: 10px;
+  }
+  &:hover {
+    box-shadow: 0 2px 16px rgb(50, 50, 45, 0.1);
+  }
+}
+
+.playground {
+  width: 330px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  button[data-index] {
+    height: 100px;
+    width: 100px;
+    background-color: #f5e8b7;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 104px;
+    &.circle::after {
+      content: "Ｏ";
+      color: #ff8080;
+    }
+    &.cross::after {
+      content: "X";
+      color: #2d9596;
+    }
+    &:hover {
+      box-shadow: 1px 1px 8px rgb(50, 50, 45, 0.1);
+    }
+  }
+}
+
+.btn {
+  color: #375256;
+  border: none;
+  letter-spacing: 2px;
+  font-size: 32px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+  &:hover {
+    color: rgb(243, 250, 251);
+  }
+}
+
+.start-game {
+  @extend %position-medium;
+  top: 80%;
+  z-index: 1;
+}
+
+.img {
+  @extend %position-medium;
+  width: 300px;
+  top: 30%;
+  &.slideUpDown {
+    left: 12%;
+    animation: slideUpDown 3s ease-in-out infinite;
+  }
+  &.game-over {
+    width: 200px;
+  }
+}
+
+@keyframes slideUpDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+.choose-first {
+  @extend %position-medium;
+  top: 77%;
+}
+
+.play-again {
+  @extend %position-medium;
+  top: 80%;
+}

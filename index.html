@@ -5,42 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Tic Tac Toe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Yusei+Magic&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="app">
-      <table>
-        <tr>
-          <td data-index="1">
-            <!-- 插入OX文字 -->
-          </td>
-          <td data-index="2"></td>
-          <td data-index="3"></td>
-        </tr>
-        <tr>
-          <td data-index="4"></td>
-          <td data-index="5"></td>
-          <td data-index="6"></td>
-        </tr>
-        <tr>
-          <td data-index="7"></td>
-          <td data-index="8"></td>
-          <td data-index="9"></td>
-        </tr>
-        <button class="start-game btn-start">START</button>
-        <div class="win-msg msg visible">
-          <p>YOU WIN</p>
-          <div class="play-again">PLAY AGAIN</div>
-        </div>
-        <div class="lose-msg msg visible">
-          <p>YOU LOSE</p>
-          <div class="play-again">PLAY AGAIN</div>
-        </div>
-        <div class="tie-msg msg visible" visible>
-          <p>TIE</p>
-          <div class="play-again">PLAY AGAIN</div>
-        </div>
-      </table>
+      <h1>OXゲーム</h1>
+      <div class="playground visible">
+        <button data-index="1"></button>
+        <button data-index="2"></button>
+        <button data-index="3"></button>
+        <button data-index="4"></button>
+        <button data-index="5"></button>
+        <button data-index="6"></button>
+        <button data-index="7"></button>
+        <button data-index="8"></button>
+        <button data-index="9"></button>
+      </div>
+
+      <div class="start-game btn">スタート</div>
+      <img class="img slideUpDown" src="./img/new_game.png" alt="welcome" />
+
+      <div class="choose-first visible">
+        <div class="btn player-first">先攻</div>
+        <div class="btn computer-first">後攻</div>
+      </div>
+      <div class="play-again btn visible">アゲーン</div>
     </div>
+
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,10 +1,11 @@
-const table = document.querySelector("#app table");
-const msg = document.querySelectorAll(".msg");
-const winMsg = document.querySelector(".win-msg");
-const loseMsg = document.querySelector(".lose-msg");
-const tieMsg = document.querySelector(".tie-msg");
-const start = document.querySelector(".btn-start");
-const playAgain = document.querySelectorAll(".play-again");
+const playground = document.querySelector(".playground");
+const message = document.querySelector("h1");
+const start = document.querySelector(".start-game");
+const chooseFirst = document.querySelector(".choose-first");
+const img = document.querySelector(".img");
+const playAgain = document.querySelector(".play-again");
+const allDrawBtn = document.querySelectorAll("[data-index]");
+console.log(allDrawBtn);
 const winCondition = [
   [1, 2, 3],
   [4, 5, 6],
@@ -16,73 +17,19 @@ const winCondition = [
   [3, 5, 7],
 ];
 
+const situation = { playerFirst: false, computerFisrt: false };
 let currentStatus = "over";
 let circlePosition = [];
 let crossPosition = [];
 
-function reset() {
-  currentStatus = "circle";
-  circlePosition = [];
-  crossPosition = [];
-  document.querySelectorAll("td").forEach((node) => (node.innerHTML = ""));
+// DRAW OOXX
+function draw(position, currentStatus) {
+  document
+    .querySelector(`[data-index="${position}"]`)
+    .classList.add(currentStatus);
 }
 
-function bestPosition() {
-  const allPosition = [...circlePosition, ...crossPosition];
-  const emptyPosition = Array.from(Array(9).keys(), (e) => e + 1).filter(
-    (num) => !allPosition.includes(num)
-  );
-
-  // 下了就贏的位置
-  const winPosition = emptyPosition.filter((num) => {
-    const temCrossPosition = [...crossPosition];
-    temCrossPosition.push(num);
-    if (isWin(temCrossPosition)) return num;
-  });
-
-  // 不下就輸的位置
-  const defensePostion = emptyPosition.filter((num) => {
-    const temCirclePosition = [...circlePosition];
-    temCirclePosition.push(num);
-    if (isWin(temCirclePosition)) return num;
-  });
-
-  if (winPosition.length) return winPosition[0];
-  if (!winPosition.length && defensePostion.length) return defensePostion[0];
-  // 看中間是不是空的
-  if (!allPosition.includes(5)) return 5;
-  // 隨機挑一個位置
-  const randomNum = Math.floor(Math.random() * emptyPosition.length);
-  // console.log(randomNum);
-  return emptyPosition[randomNum];
-}
-
-function noEmpty() {
-  if (circlePosition.length + crossPosition.length === 9) return true;
-}
-
-function winMessage() {
-  if (noEmpty()) {
-    tieMsg.classList.remove("visible");
-    currentStatus = "over";
-  }
-
-  if (isWin(circlePosition)) {
-    winMsg.classList.remove("visible");
-  } else if (isWin(crossPosition)) {
-    loseMsg.classList.remove("visible");
-    currentStatus = "over";
-  }
-}
-
-function isWin(positionArr) {
-  for (const arr of winCondition) {
-    if (arr.every((num) => positionArr.includes(num))) {
-      return true;
-    }
-  }
-}
-
+// 更換目前選手狀態
 function playerSwitch() {
   if (currentStatus === "circle") {
     return (currentStatus = "cross");
@@ -90,49 +37,167 @@ function playerSwitch() {
     return (currentStatus = "circle");
   }
 }
-function draw(position, currentStatus) {
-  document.querySelector(
-    `[data-index="${position}"]`
-  ).innerHTML = `<div class="${currentStatus}"></div>`;
+
+// 重置遊戲
+function reset() {
+  currentStatus = "circle";
+  circlePosition = [];
+  crossPosition = [];
+  situation.playerFirst = false;
+  situation.computerFisrt = false;
+  img.src = "./img/new_game.png";
+  img.classList.add("slideUpDown");
+  img.classList.remove("game-over");
+  chooseFirst.classList.remove("visible");
+  playAgain.classList.add("visible");
+  message.innerText = "OXゲーム";
+}
+
+// 電腦找出最佳位置
+function bestPosition(playerPosition, computerPosition) {
+  const allPosition = [...playerPosition, ...computerPosition];
+  const emptyPosition = Array.from(Array(9).keys(), (e) => e + 1).filter(
+    (num) => !allPosition.includes(num)
+  );
+  // 測試用
+  // console.log(emptyPosition);
+
+  // 下了就贏的位置
+  const winPosition = emptyPosition.filter((num) => {
+    const temPosition = [...computerPosition];
+    temPosition.push(num);
+    if (isWin(temPosition)) return num;
+  });
+
+  // 不下就輸的位置
+  const defensePostion = emptyPosition.filter((num) => {
+    const temPosition = [...playerPosition];
+    temPosition.push(num);
+    if (isWin(temPosition)) return num;
+  });
+  // 判斷要return下了就贏還是不下就輸的位置
+  if (winPosition.length) return winPosition[0];
+  if (!winPosition.length && defensePostion.length) return defensePostion[0];
+
+  // 測試用
+  // console.log(winPosition, defensePostion);
+
+  // 中間如果是空的就先return中間
+  if (!allPosition.includes(5)) return 5;
+  // 隨機挑一個位置
+  const randomNum = Math.floor(Math.random() * emptyPosition.length);
+  // console.log(randomNum);
+  return emptyPosition[randomNum];
+}
+
+// 確認是否已沒空位可下
+function noEmptyToDraw() {
+  if (circlePosition.length + crossPosition.length === 9) return true;
+}
+
+// 是否符合獲勝條件
+function isWin(positionArr) {
+  for (const arr of winCondition) {
+    if (arr.every((num) => positionArr.includes(num))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// 判斷誰贏了並輸出獲勝訊息
+function winMessage(playerPosition, computerPosition) {
+  if (!noEmptyToDraw() && !isWin(playerPosition) && !isWin(computerPosition))
+    return;
+  console.log("WINNNN");
+  if (noEmptyToDraw()) {
+    message.innerText = "引き分け";
+    img.src = "./img/tie.png";
+  }
+  if (isWin(playerPosition)) {
+    message.innerText = "🎉勝ち🎉";
+    img.src = "./img/win.png";
+  }
+  if (isWin(computerPosition)) {
+    message.innerText = "負け";
+    img.src = "./img/lose.png";
+  }
+  currentStatus = "over";
+  setTimeout(() => {
+    // 渲染畫面
+    playground.classList.add("visible");
+    img.classList.add("game-over");
+    img.classList.remove("visible", "slideUpDown");
+    playAgain.classList.remove("visible");
+  }, 1000);
+}
+
+// 將位置推入陣列並確認是否有輸贏
+function pushPosition(position, positionArray) {
+  positionArray.push(position);
   playerSwitch();
 }
 
-function changeToComputer(position) {
-  circlePosition.push(position);
-  winMessage();
+// 電腦下，延遲0.25秒假裝電腦在思考
+function computerAction(playerPosition, computerPosition) {
+  let position = bestPosition(playerPosition, computerPosition);
+  if (noEmptyToDraw()) return;
   setTimeout(function () {
-    if (noEmpty()) return;
-    const crossP = bestPosition();
-    if (currentStatus === "cross") crossPosition.push(crossP);
-    draw(crossP, currentStatus);
-    winMessage();
+    draw(position, currentStatus);
+    // 測試用，電腦下的位置回報
+    // console.log(position);
+    pushPosition(position, computerPosition);
+    winMessage(playerPosition, computerPosition);
   }, 250);
 }
 
+// ---EVENT LISTENER----
 start.addEventListener("click", function () {
-  currentStatus = "circle";
+  // 渲染開始畫面
   start.classList.add("visible");
+  chooseFirst.classList.remove("visible");
+  currentStatus = "circle";
 });
 
-table.addEventListener("click", function clickTable(event) {
-  const position = +event.target.dataset.index;
-  if (
-    event.target.tagName !== "TD" ||
-    currentStatus === "over" ||
-    circlePosition.includes(position)
-  )
-    return;
+chooseFirst.addEventListener("click", function whoFirst(e) {
+  // 選擇先後攻畫面渲染
+  img.classList.add("visible");
+  chooseFirst.classList.add("visible");
+  playground.classList.remove("visible");
+  // 先攻
+  if (e.target.classList.contains("player-first")) {
+    situation.playerFirst = true;
+  }
+  // 後攻
+  if (e.target.classList.contains("computer-first")) {
+    situation.computerFisrt = true;
+    computerAction(crossPosition, circlePosition);
+  }
+});
 
+// GAME EVENT LISTENER
+playground.addEventListener("click", function clickTable(event) {
+  // 定義區域變數
+  let position = +event.target.dataset.index;
+  if ([...circlePosition, crossPosition].includes(position)) return;
   draw(position, currentStatus);
-  changeToComputer(position);
+  let playerPosition;
+  let computerPosition;
+  // 設定先後攻需要傳入的Array
+  if (situation.playerFirst) {
+    playerPosition = circlePosition;
+    computerPosition = crossPosition;
+  }
+  if (situation.computerFisrt) {
+    playerPosition = crossPosition;
+    computerPosition = circlePosition;
+  }
+  pushPosition(position, playerPosition);
+  winMessage(playerPosition, computerPosition);
+  computerAction(playerPosition, computerPosition);
 });
 
-playAgain.forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    reset();
-    msg.forEach(function (btn) {
-      btn.classList.remove("visilbe");
-      btn.classList.add("visible");
-    });
-  });
+playAgain.addEventListener("click", function playagain() {
+  allDrawBtn.forEach((btn) => (btn.classList = ""));
+  reset();
 });

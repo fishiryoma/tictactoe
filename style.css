@@ -1,101 +1,112 @@
+@charset "UTF-8";
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Yusei Magic", sans-serif;
+  background-color: #8acdd7;
 }
 
-#app {
-  background-color: #565957;
-  width: 100%;
-  height: 100vh;
-
-  display: flex;
-  justify-content: center;
-}
-
-#app table {
-  align-self: center;
-  border-collapse: collapse;
-  position: relative;
-}
-
-#app table tr td:not(:last-child) {
-  border-right: 12px solid rgba(255, 255, 255, 0.5);
-}
-
-#app table tr:not(:last-child) td {
-  border-bottom: 12px solid rgba(255, 255, 255, 0.5);
-}
-
-#app table tr td {
-  height: 120px;
-  width: 120px;
-  text-align: center;
-}
-
-#app table tr td div {
-  font-size: 80px;
-  font-weight: 700;
-}
-
-#app table tr td .circle::after {
-  content: "Ｏ";
-  color: rgba(121, 247, 207, 0.6);
-}
-
-#app table tr td .cross::after {
-  content: "X";
-  color: rgba(255, 115, 50, 0.6);
+.play-again, .choose-first, .img, .start-game {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .visible {
   visibility: hidden;
 }
 
-.start-game {
-  /* visibility: hidden; */
-  position: absolute;
-  transform: translate(0, -50%);
-  z-index: 1;
-  top: 50%;
-  background-color: #565957;
-  color: #f8f9fa;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  letter-spacing: 2px;
-  font-size: 20px;
-  cursor: pointer;
-}
-.start-game:hover {
-  color: #dee2e6;
-}
-
-.msg {
-  /* visibility: hidden; */
+#app {
+  width: 400px;
+  margin: 60px auto;
+  padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  position: absolute;
-  transform: translate(0, -50%);
-  z-index: 1;
-  top: 50%;
-  width: 20%;
-  height: 30%;
-  background-color: rgb(255, 255, 255, 0.8);
-  font-size: 54px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 1px 8px rgba(50, 50, 45, 0.3);
+  position: relative;
+}
+#app h1 {
+  color: #32322d;
+  font-size: 50px;
+  letter-spacing: 10px;
+}
+#app:hover {
+  box-shadow: 0 2px 16px rgba(50, 50, 45, 0.1);
 }
 
-.msg p {
-  margin: auto;
-  transform: translate(0, 30%);
+.playground {
+  width: 330px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.playground button[data-index] {
+  height: 100px;
+  width: 100px;
+  background-color: #f5e8b7;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 1px 1px 4px rgba(50, 50, 45, 0.4);
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 104px;
+}
+.playground button[data-index].circle::after {
+  content: "Ｏ";
+  color: #ff8080;
+}
+.playground button[data-index].cross::after {
+  content: "X";
+  color: #2d9596;
+}
+.playground button[data-index]:hover {
+  box-shadow: 1px 1px 8px rgba(50, 50, 45, 0.1);
+}
+
+.btn {
+  color: #375256;
+  border: none;
+  letter-spacing: 2px;
+  font-size: 32px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+.btn:hover {
+  color: rgb(243, 250, 251);
+}
+
+.start-game {
+  top: 80%;
+  z-index: 1;
+}
+
+.img {
+  width: 300px;
+  top: 30%;
+}
+.img.slideUpDown {
+  left: 12%;
+  animation: slideUpDown 3s ease-in-out infinite;
+}
+.img.game-over {
+  width: 200px;
+}
+
+@keyframes slideUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+.choose-first {
+  top: 77%;
 }
 
 .play-again {
-  font-size: 18px;
-  padding-bottom: 15px;
-  cursor: pointer;
-}
+  top: 80%;
+}/*# sourceMappingURL=style.css.map */

@@ -167,7 +167,7 @@ function winMessage(playerPosition, computerPosition) {
   }
   if (isWin(playerPosition)) {
     message.innerText = "🎉勝利🎉";
-    img.src = "./img/win.webp";
+    img.src = "./img/win.png";
   }
   if (isWin(computerPosition)) {
     message.innerText = "負けた";

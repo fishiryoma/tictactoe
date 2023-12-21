@@ -58,19 +58,22 @@ arr.every((num) => positionArr.includes(num))
 如何畫線?
 
 ```
-第一個嘗試使用一個div來設定線的樣式，並透過添加1~8個不同的class，搭配postiton: absolute的位置調整來做到8條線的不同效果
+第一個嘗試使用一個div來設定線的樣式，並透過添加1~8個不同的class。
+搭配postiton: absolute的位置調整來做到8條線的不同效果
 ```
 
 除了顯示出線之外，還想做到從左畫到右的效果
 
 ```
-使用transition搭配transform: scale的方式能做到，但因為所有的class都作用在一個div上，造成position互相影響混亂的情況。
+使用transition搭配transform: scale的方式能做到。
+但因為所有的class都作用在一個div上，造成position互相影響混亂的情況。
 ```
 
 改成使用 8 個 div 來做
 
 ```
-將需要add & remove的style寫在class裡，不會更動的樣式寫在[data]裡面，就可以在後續做到用forEach一次清除掉所有的class。
+將需要add & remove的style寫在class裡，不會更動的樣式寫在[data]裡面，
+就可以在後續做到用forEach一次清除掉所有的class。
 ```
 
 ![gameOver](./img/screen_game.png)

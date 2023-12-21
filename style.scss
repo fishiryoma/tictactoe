@@ -13,6 +13,9 @@ body {
 .visible {
   visibility: hidden;
 }
+.hidden {
+  display: none;
+}
 
 #app {
   width: 400px;
@@ -40,6 +43,7 @@ body {
   gap: 15px;
   flex-wrap: wrap;
   justify-content: space-between;
+  position: relative;
   button[data-index] {
     height: 100px;
     width: 100px;
@@ -114,4 +118,98 @@ body {
 .play-again {
   @extend %position-medium;
   top: 80%;
+}
+
+[data-line] {
+  @extend %position-medium;
+  background-color: #fcc419;
+  border-radius: 15px;
+  transition: transform 1s;
+}
+
+%horizionLine {
+  width: 230px;
+  height: 7px;
+  transform-origin: left;
+  transform: scale(0, 1);
+  left: 50px;
+}
+[data-line="1"] {
+  @extend %horizionLine;
+  top: 50px;
+  &.line1 {
+    transform: scale(1, 1);
+  }
+}
+
+[data-line="2"] {
+  @extend %horizionLine;
+
+  top: 165px;
+  &.line2 {
+    transform: scale(1, 1);
+  }
+}
+
+[data-line="3"] {
+  @extend %horizionLine;
+  top: 280px;
+  &.line3 {
+    transform: scale(1, 1);
+  }
+}
+
+%verticalLine {
+  width: 7px;
+  height: 230px;
+  transform: scale(1, 0);
+  transform-origin: top;
+  top: 50px;
+}
+[data-line="4"] {
+  @extend %verticalLine;
+  left: 45px;
+  &.line4 {
+    transform: scale(1, 1);
+  }
+}
+
+[data-line="5"] {
+  @extend %verticalLine;
+  left: 160px;
+  &.line5 {
+    transform: scale(1, 1);
+  }
+}
+
+[data-line="6"] {
+  @extend %verticalLine;
+  left: 275px;
+  &.line6 {
+    transform: scale(1, 1);
+  }
+}
+
+[data-line="7"] {
+  width: 325px;
+  height: 7px;
+  transform: scale(0, 0) rotate(45deg);
+  transform-origin: left;
+  top: 50px;
+  left: 50px;
+  &.line7 {
+    transform: scale(1, 1) rotate(45deg);
+  }
+}
+
+[data-line="8"] {
+  width: 325px;
+  height: 7px;
+  transform: scale(0, 0) rotate(135deg);
+  transform-origin: left;
+  top: 41px;
+  left: 281px;
+  &.line8 {
+    transform: scale(1, 1) rotate(135deg);
+  }
 }

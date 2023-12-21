@@ -160,21 +160,26 @@ function isWin(positionArr) {
 function winMessage(playerPosition, computerPosition) {
   if (!noEmptyToDraw() && !isWin(playerPosition) && !isWin(computerPosition))
     return;
+  // 平手
   if (noEmptyToDraw()) {
     message.innerText = "引き分け";
     img.src = "./img/tie.png";
     winArray = [];
   }
+  // WIN
   if (isWin(playerPosition)) {
-    message.innerText = "🎉勝利🎉";
+    message.innerText = "🎉勝った🎉";
     img.src = "./img/win.png";
   }
+  // LOSE
   if (isWin(computerPosition)) {
     message.innerText = "負けた";
     img.src = "./img/lose.png";
   }
   currentStatus = "over";
+  // 畫連線CSS有transition延遲
   drawWinLine();
+  // 設定setTimeout顯示遊戲結束畫面
   showGameOver();
 }
 

@@ -46,8 +46,8 @@ body {
 .playground {
   width: 310px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
   gap: 5px;
   position: relative;
   button[data-index] {

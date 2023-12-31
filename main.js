@@ -60,7 +60,6 @@ function reset() {
   crossPosition = [];
   playerPosition = [];
   computerPosition = [];
-  winArray = [];
   allDrawBtn.forEach((btn) => (btn.classList = ""));
   allDrawLine.forEach((line) => (line.classList = ""));
   // 回到選擇先後攻畫面
@@ -70,6 +69,16 @@ function reset() {
   chooseFirst.classList.remove("visible");
   playAgain.classList.add("visible");
   message.innerText = "OXゲーム";
+  if (winArray.length) {
+    console.log(document.querySelector(`[data-line="${winArray[0] + 1}"]`));
+    document
+      .querySelector(`[data-line="${winArray[0] + 1}"]`)
+      .removeEventListener("transitionend", () => {
+        // 設定setTimeout顯示遊戲結束畫面
+        showGameOver(300);
+      });
+  }
+  winArray = [];
 }
 
 function createLine() {
@@ -80,15 +89,13 @@ function createLine() {
 }
 
 // 畫完連線後顯示遊戲結束畫面
-function showGameOver() {
-  let delayTime = 1800;
-  if (!winArray.length) delayTime = 800;
+function showGameOver(delaytime) {
   setTimeout(() => {
     playground.classList.add("visible");
     img.classList.add("game-over");
     img.classList.remove("visible", "slideUpDown");
     playAgain.classList.remove("visible");
-  }, delayTime);
+  }, delaytime);
 }
 
 // 電腦找出最佳位置
@@ -160,6 +167,7 @@ function winMessage(msg) {
     message.innerText = "引き分け";
     winArray = [];
     tScore++;
+    showGameOver(800);
   }
   // WIN
   if (msg === "win") {
@@ -173,9 +181,15 @@ function winMessage(msg) {
   }
   currentStatus = "over";
   // 畫連線CSS
+  if (winArray.length) {
+    document
+      .querySelector(`[data-line="${winArray[0] + 1}"]`)
+      .addEventListener("transitionend", () => {
+        // 設定setTimeout顯示遊戲結束畫面
+        showGameOver(300);
+      });
+  }
   createLine();
-  // 設定setTimeout顯示遊戲結束畫面
-  showGameOver();
   updateScore();
 }
 
@@ -235,8 +249,10 @@ playground.addEventListener("click", function clickTable(event) {
   // 將位置推入陣列並驗證是否有贏家
   let isPlayerWin = pushPosition(position, playerPosition);
   if (!isPlayerWin) {
+    // 若無，則換電腦繼續下
     return computerAction(playerPosition, computerPosition);
   }
+  // 若有，遊戲結束、呼叫結束畫面
   winMessage(isPlayerWin);
 });
 

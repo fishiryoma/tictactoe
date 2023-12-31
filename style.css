@@ -1,14 +1,20 @@
 @charset "UTF-8";
 body {
   margin: 0;
-  font-family: "Yusei Magic", sans-serif;
+  font-family: "Potta One", "Yusei Magic", sans-serif;
   background-color: #8acdd7;
+  color: #32322d;
 }
 
 .play-again, .choose-first, .img, .start-game {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.container {
+  width: 380px;
+  margin: 10px auto;
 }
 
 .visible {
@@ -21,7 +27,6 @@ body {
 
 #app {
   width: 380px;
-  margin: 60px auto;
   padding-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -207,4 +212,35 @@ body {
 
 .line8 {
   transform: scaleX(1) rotate(-45deg);
+}
+
+.user_score, .user_title {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.7fr;
+  gap: 10px;
+  margin: 0 auto;
+  text-align: center;
+  width: 88%;
+}
+
+.game_statistic {
+  box-shadow: 0 1px 3px rgba(50, 50, 45, 0.3);
+  background-color: rgba(250, 246, 240, 0.85);
+  border-radius: 3px;
+  width: 55%;
+  margin: 0 auto;
+}
+
+.user_title {
+  line-height: 0.5;
+  border-bottom: 3px solid #32322d;
+  margin-top: 30px;
+}
+
+.user_score {
+  color: #2d9596;
+}
+
+.user_score p {
+  line-height: 0;
 }/*# sourceMappingURL=style.css.map */

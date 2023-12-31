@@ -6,6 +6,9 @@ const img = document.querySelector(".img");
 const playAgain = document.querySelector(".play-again");
 const allDrawBtn = document.querySelectorAll("[data-index]");
 const allDrawLine = document.querySelectorAll("[data-line]");
+const playerScore = document.querySelector(".player_score");
+const computerScore = document.querySelector(".computer_score");
+const tieScore = document.querySelector(".tie_score");
 const winCondition = [
   [1, 2, 3],
   [4, 5, 6],
@@ -23,7 +26,16 @@ let crossPosition = [];
 let playerPosition;
 let computerPosition;
 let winArray = [];
+let pScore = 0;
+let cScore = 0;
+let tScore = 0;
 
+// 寫入分數
+function updateScore() {
+  playerScore.textContent = pScore;
+  computerScore.textContent = cScore;
+  tieScore.textContent = tScore;
+}
 // DRAW OOXX
 function draw(position, currentStatus) {
   document
@@ -147,20 +159,24 @@ function winMessage(msg) {
   if (msg === "tie") {
     message.innerText = "引き分け";
     winArray = [];
+    tScore++;
   }
   // WIN
   if (msg === "win") {
     message.innerText = "🎉勝った🎉";
+    pScore++;
   }
   // LOSE
   if (msg === "lose") {
     message.innerText = "負けた";
+    cScore++;
   }
   currentStatus = "over";
   // 畫連線CSS
   createLine();
   // 設定setTimeout顯示遊戲結束畫面
   showGameOver();
+  updateScore();
 }
 
 // 將位置推入陣列並確認是否有輸贏

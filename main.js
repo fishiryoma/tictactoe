@@ -39,7 +39,7 @@ function updateScore() {
   // 客製化推特訊息
   twitterBtn.href = `https://twitter.com/intent/tweet?text=OXゲームで${pScore}回勝った、${cScore}回負けた、${tScore}回引き分け...${
     pScore > cScore ? "天才だ❤️" : "だめだ😭"
-  }`;
+  }Link:'https://tictactoe-tess.netlify.app/'`;
 }
 // DRAW OOXX
 function draw(position, currentStatus) {

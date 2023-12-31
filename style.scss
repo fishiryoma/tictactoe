@@ -14,6 +14,8 @@ body {
 
 .container {
   width: 380px;
+  width: 23.75rem;
+
   margin: 10px auto;
 }
 
@@ -45,18 +47,21 @@ body {
 
 .playground {
   width: 310px;
+  width: 19.357rem;
   display: grid;
   display: -ms-grid;
-  grid-template-columns: repeat(3, 100px);
-  -webkit-grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  -webkit-grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 1fr);
+  -webkit-grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  -webkit-grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   -webkit-gap: 5px;
   position: relative;
   button[data-index] {
     height: 100px;
+    height: 6.25rem;
     width: 100px;
+    width: 6.25rem;
     background-color: #f5e8b7;
     border-radius: 15px;
     border: none;

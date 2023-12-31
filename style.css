@@ -223,6 +223,10 @@ body {
   width: 88%;
 }
 
+.result_wrap {
+  position: relative;
+}
+
 .game_statistic {
   box-shadow: 0 1px 3px rgba(50, 50, 45, 0.3);
   background-color: rgba(250, 246, 240, 0.85);
@@ -243,4 +247,14 @@ body {
 
 .user_score p {
   line-height: 0;
+}
+
+.twitter_btn {
+  position: absolute;
+  bottom: 0;
+  right: 45px;
+}
+.twitter_btn i {
+  font-size: 30px;
+  color: #00acee;
 }/*# sourceMappingURL=style.css.map */

@@ -232,6 +232,10 @@ body {
   width: 88%;
 }
 
+.result_wrap {
+  position: relative;
+}
+
 .game_statistic {
   // font-family: "Potta One", sans-serif;
   box-shadow: 0 1px 3px rgb(50, 50, 45, 0.3);
@@ -253,4 +257,14 @@ body {
 }
 .user_score p {
   line-height: 0;
+}
+
+.twitter_btn {
+  position: absolute;
+  bottom: 0;
+  right: 45px;
+  i {
+    font-size: 30px;
+    color: #00acee;
+  }
 }

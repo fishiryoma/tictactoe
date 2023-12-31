@@ -9,6 +9,7 @@ const allDrawLine = document.querySelectorAll("[data-line]");
 const playerScore = document.querySelector(".player_score");
 const computerScore = document.querySelector(".computer_score");
 const tieScore = document.querySelector(".tie_score");
+const twitterBtn = document.querySelector(".twitter_btn");
 const winCondition = [
   [1, 2, 3],
   [4, 5, 6],
@@ -35,6 +36,10 @@ function updateScore() {
   playerScore.textContent = pScore;
   computerScore.textContent = cScore;
   tieScore.textContent = tScore;
+  // 客製化推特訊息
+  twitterBtn.href = `https://twitter.com/intent/tweet?text=OXゲームで${pScore}回勝った、${cScore}回負けた、${tScore}回引き分け...${
+    pScore > cScore ? "天才だ❤️" : "だめだ😭"
+  }`;
 }
 // DRAW OOXX
 function draw(position, currentStatus) {
@@ -70,7 +75,6 @@ function reset() {
   playAgain.classList.add("visible");
   message.innerText = "OXゲーム";
   if (winArray.length) {
-    console.log(document.querySelector(`[data-line="${winArray[0] + 1}"]`));
     document
       .querySelector(`[data-line="${winArray[0] + 1}"]`)
       .removeEventListener("transitionend", () => {

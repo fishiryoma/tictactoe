@@ -18,10 +18,10 @@ body {
 }
 
 #app {
-  width: 400px;
+  width: 380px;
   margin: 60px auto;
   padding-bottom: 40px;
-  display: -webkit-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 15px;
@@ -38,11 +38,11 @@ body {
 }
 
 .playground {
-  width: 330px;
-  display: -webkit-flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  width: 310px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
   position: relative;
   button[data-index] {
     height: 100px;
@@ -83,8 +83,9 @@ body {
 
 .start-game {
   @extend %position-medium;
-  top: 80%;
+  top: 76%;
   z-index: 1;
+  text-align: center;
 }
 
 .img {
@@ -117,99 +118,101 @@ body {
 
 .play-again {
   @extend %position-medium;
-  top: 80%;
+  top: 76%;
+  text-align: center;
 }
 
-[data-line] {
-  @extend %position-medium;
+.title,
+.text {
+  line-height: 0.2px;
+}
+.text {
+  font-size: 1.3rem;
+}
+
+%lineStyle {
+  position: absolute;
   background-color: #fcc419;
   border-radius: 15px;
-  transition: transform 1s;
 }
-
-%horizionLine {
+%rowLineStyle {
+  left: 45px;
   width: 230px;
   height: 7px;
   transform-origin: left;
-  transform: scale(0, 1);
-  left: 50px;
+  transform: scaleX(0);
 }
 [data-line="1"] {
-  @extend %horizionLine;
-  top: 50px;
-  &.line1 {
-    transform: scale(1, 1);
-  }
+  @extend %lineStyle;
+  @extend %rowLineStyle;
+  top: 45px;
 }
-
 [data-line="2"] {
-  @extend %horizionLine;
-
-  top: 165px;
-  &.line2 {
-    transform: scale(1, 1);
-  }
+  @extend %lineStyle;
+  @extend %rowLineStyle;
+  top: 150px;
 }
-
 [data-line="3"] {
-  @extend %horizionLine;
-  top: 280px;
-  &.line3 {
-    transform: scale(1, 1);
-  }
+  @extend %lineStyle;
+  @extend %rowLineStyle;
+  top: 255px;
+}
+.line1,
+.line2,
+.line3,
+.line7,
+.line8 {
+  transform: scaleX(1);
+  transition: transform 1s;
 }
 
-%verticalLine {
+%columnLineStyle {
   width: 7px;
   height: 230px;
-  transform: scale(1, 0);
   transform-origin: top;
-  top: 50px;
+  transform: scaleY(0);
+  top: 45px;
 }
 [data-line="4"] {
-  @extend %verticalLine;
+  @extend %lineStyle;
+  @extend %columnLineStyle;
   left: 45px;
-  &.line4 {
-    transform: scale(1, 1);
-  }
 }
-
 [data-line="5"] {
-  @extend %verticalLine;
-  left: 160px;
-  &.line5 {
-    transform: scale(1, 1);
-  }
+  @extend %lineStyle;
+  @extend %columnLineStyle;
+  left: 150px;
 }
-
 [data-line="6"] {
-  @extend %verticalLine;
-  left: 275px;
-  &.line6 {
-    transform: scale(1, 1);
-  }
+  @extend %lineStyle;
+  @extend %columnLineStyle;
+  left: 255px;
+}
+.line4,
+.line5,
+.line6 {
+  transform: scaleY(1);
+  transition: transform 1s;
 }
 
 [data-line="7"] {
-  width: 325px;
-  height: 7px;
-  transform: scale(0, 0) rotate(45deg);
-  transform-origin: left;
-  top: 50px;
-  left: 50px;
-  &.line7 {
-    transform: scale(1, 1) rotate(45deg);
-  }
+  @extend %lineStyle;
+  @extend %rowLineStyle;
+  top: 45px;
+  width: 310px;
 }
 
 [data-line="8"] {
-  width: 325px;
-  height: 7px;
-  transform: scale(0, 0) rotate(135deg);
-  transform-origin: left;
-  top: 41px;
-  left: 281px;
-  &.line8 {
-    transform: scale(1, 1) rotate(135deg);
-  }
+  @extend %lineStyle;
+  @extend %rowLineStyle;
+  top: 45px;
+  left: -45px;
+  width: 310px;
+  transform-origin: right;
+}
+.line7 {
+  transform: scaleX(1) rotate(45deg);
+}
+.line8 {
+  transform: scaleX(1) rotate(-45deg);
 }

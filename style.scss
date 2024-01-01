@@ -14,7 +14,7 @@ body {
 
 .container {
   // width: 380px;
-  width: 23.75rem;
+  max-width: 23.75rem;
 
   margin: 10px auto;
 }
@@ -27,7 +27,7 @@ body {
 }
 
 #app {
-  width: 380px;
+  max-width: 380px;
   padding-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -46,11 +46,12 @@ body {
 }
 
 .playground {
-  width: 310px;
-  width: 19.357rem;
+  max-width: 310px;
+  max-width: 19.357rem;
   display: grid;
   // display: -ms-grid;
-  grid-template-columns: repeat(3, 1fr);
+  // grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: auto auto auto;
   // -webkit-grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   // -webkit-grid-template-rows: repeat(3, 1fr);

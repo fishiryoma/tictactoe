@@ -70,7 +70,6 @@ body {
 button[data-index] {
   height: 100px;
   width: 100px;
-  font-size: 80px;
 }
 button[data-index].circle::after {
   content: "Ｏ";

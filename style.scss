@@ -51,32 +51,10 @@ body {
   background-color: #32322d;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  // grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   // -webkit-gap: 5px;
   position: relative;
-  button[data-index] {
-    height: 100px;
-    width: 100px;
-    background-color: #f5e8b7;
-    border-radius: 15px;
-    border: none;
-    box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
-    font-size: 80px;
-    font-weight: 700;
-    line-height: 104px;
-    &.circle::after {
-      content: "Ｏ";
-      color: #ff8080;
-    }
-    &.cross::after {
-      content: "X";
-      color: #2d9596;
-    }
-    &:hover {
-      box-shadow: 1px 1px 8px rgb(50, 50, 45, 0.1);
-    }
-  }
 }
 
 .btn {
@@ -89,6 +67,29 @@ body {
   transition: color 0.2s ease-out;
   &:hover {
     color: rgb(243, 250, 251);
+  }
+}
+button[data-index] {
+  display: -webkit-box;
+  height: 100px;
+  width: 100px;
+  background-color: #f5e8b7;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 104px;
+  &.circle::after {
+    content: "Ｏ";
+    color: #ff8080;
+  }
+  &.cross::after {
+    content: "X";
+    color: #2d9596;
+  }
+  &:hover {
+    box-shadow: 1px 1px 8px rgb(50, 50, 45, 0.1);
   }
 }
 

@@ -48,6 +48,7 @@ body {
 .playground {
   max-width: 310px;
   max-width: 19.357rem;
+  background-color: #32322d;
   display: grid;
   // display: -ms-grid;
   // grid-template-columns: repeat(3, 1fr);
@@ -279,6 +280,10 @@ body {
   }
 }
 
+.wrap {
+  background-color: red;
+  width: 300px;
+}
 .a {
   width: 100px;
 }

@@ -46,10 +46,9 @@ body {
 .playground {
   max-width: 310px;
   max-width: 19.357rem;
-  background-color: #32322d;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   position: relative;
 }
@@ -79,10 +78,12 @@ button[data-index] {
   &.circle::after {
     content: "Ｏ";
     color: #ff8080;
+    font-size: 80px;
   }
   &.cross::after {
     content: "X";
     color: #2d9596;
+    font-size: 80px;
   }
   &:hover {
     box-shadow: 1px 1px 8px rgb(50, 50, 45, 0.1);
@@ -270,24 +271,3 @@ button[data-index] {
     color: #00acee;
   }
 }
-
-.wrap {
-  background-color: red;
-  // width: 300px;
-  // display: grid;
-
-  // grid-template-columns: 1fr 1fr 1fr;
-}
-.a {
-  height: 100px;
-  width: 100px;
-}
-.b {
-  width: 50px;
-}
-.c {
-  font-size: 80px;
-}
-// .wrap2 {
-//   background-color: #fcc419;
-// }

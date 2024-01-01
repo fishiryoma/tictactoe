@@ -47,9 +47,9 @@ body {
 .playground {
   max-width: 310px;
   max-width: 19.357rem;
-  background-color: #32322d;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   position: relative;
 }
@@ -80,10 +80,12 @@ button[data-index] {
 button[data-index].circle::after {
   content: "Ｏ";
   color: #ff8080;
+  font-size: 80px;
 }
 button[data-index].cross::after {
   content: "X";
   color: #2d9596;
+  font-size: 80px;
 }
 button[data-index]:hover {
   box-shadow: 1px 1px 8px rgba(50, 50, 45, 0.1);
@@ -258,21 +260,4 @@ button[data-index]:hover {
 .twitter_btn i {
   font-size: 30px;
   color: #00acee;
-}
-
-.wrap {
-  background-color: red;
-}
-
-.a {
-  height: 100px;
-  width: 100px;
-}
-
-.b {
-  width: 50px;
-}
-
-.c {
-  font-size: 80px;
 }/*# sourceMappingURL=style.css.map */

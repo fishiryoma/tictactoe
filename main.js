@@ -175,7 +175,7 @@ function winMessage(msg) {
   }
   // WIN
   if (msg === "win") {
-    message.innerText = "🎉勝った🎉";
+    message.innerText = "勝った";
     pScore++;
   }
   // LOSE

@@ -50,20 +50,14 @@ body {
   max-width: 19.357rem;
   background-color: #32322d;
   display: grid;
-  // display: -ms-grid;
-  // grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: auto auto auto;
-  // -webkit-grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
-  // -webkit-grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   // -webkit-gap: 5px;
   position: relative;
   button[data-index] {
-    // height: 100px;
-    height: 6.25rem;
-    // width: 100px;
-    width: 6.25rem;
+    height: 100px;
+    width: 100px;
     background-color: #f5e8b7;
     border-radius: 15px;
     border: none;

@@ -49,14 +49,14 @@ body {
   max-width: 19.357rem;
   background-color: #32322d;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   position: relative;
 }
 .playground button[data-index] {
-  height: 6.25rem;
-  width: 6.25rem;
+  height: 100px;
+  width: 100px;
   background-color: #f5e8b7;
   border-radius: 15px;
   border: none;

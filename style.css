@@ -70,6 +70,12 @@ body {
 button[data-index] {
   height: 100px;
   width: 100px;
+  background-color: #f5e8b7;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 1px 1px 4px rgba(50, 50, 45, 0.4);
+  font-weight: 700;
+  line-height: 104px;
 }
 button[data-index].circle::after {
   content: "Ｏ";
@@ -254,6 +260,10 @@ button[data-index]:hover {
   color: #00acee;
 }
 
+.wrap {
+  background-color: red;
+}
+
 .a {
   height: 100px;
   width: 100px;
@@ -261,4 +271,8 @@ button[data-index]:hover {
 
 .b {
   width: 50px;
+}
+
+.c {
+  font-size: 80px;
 }/*# sourceMappingURL=style.css.map */

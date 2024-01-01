@@ -68,16 +68,8 @@ body {
 }
 
 button[data-index] {
-  display: -webkit-box;
   height: 100px;
   width: 100px;
-  background-color: #f5e8b7;
-  border-radius: 15px;
-  border: none;
-  box-shadow: 1px 1px 4px rgba(50, 50, 45, 0.4);
-  font-size: 80px;
-  font-weight: 700;
-  line-height: 104px;
 }
 button[data-index].circle::after {
   content: "Ｏ";
@@ -270,9 +262,14 @@ button[data-index]:hover {
 }
 
 .a {
+  height: 100px;
   width: 100px;
 }
 
 .b {
   width: 50px;
+}
+
+.wrap2 {
+  background-color: #fcc419;
 }/*# sourceMappingURL=style.css.map */

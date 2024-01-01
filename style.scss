@@ -70,16 +70,15 @@ body {
   }
 }
 button[data-index] {
-  display: -webkit-box;
   height: 100px;
   width: 100px;
-  background-color: #f5e8b7;
-  border-radius: 15px;
-  border: none;
-  box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
-  font-size: 80px;
-  font-weight: 700;
-  line-height: 104px;
+  // background-color: #f5e8b7;
+  // border-radius: 15px;
+  // border: none;
+  // box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
+  // font-size: 80px;
+  // font-weight: 700;
+  // line-height: 104px;
   &.circle::after {
     content: "Ｏ";
     color: #ff8080;
@@ -283,8 +282,13 @@ button[data-index] {
   grid-template-columns: 1fr 1fr 1fr;
 }
 .a {
+  height: 100px;
   width: 100px;
 }
 .b {
   width: 50px;
+}
+
+.wrap2 {
+  background-color: #fcc419;
 }

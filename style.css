@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-  width: 380px;
+  max-width: 23.75rem;
   margin: 10px auto;
 }
 
@@ -26,7 +26,7 @@ body {
 }
 
 #app {
-  width: 380px;
+  max-width: 380px;
   padding-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -45,16 +45,17 @@ body {
 }
 
 .playground {
-  width: 310px;
+  max-width: 310px;
+  max-width: 19.357rem;
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: auto auto auto;
+  grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   position: relative;
 }
 .playground button[data-index] {
-  height: 100px;
-  width: 100px;
+  height: 6.25rem;
+  width: 6.25rem;
   background-color: #f5e8b7;
   border-radius: 15px;
   border: none;
@@ -257,4 +258,12 @@ body {
 .twitter_btn i {
   font-size: 30px;
   color: #00acee;
+}
+
+.a {
+  width: 100px;
+}
+
+.b {
+  width: 50px;
 }/*# sourceMappingURL=style.css.map */

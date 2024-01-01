@@ -70,13 +70,13 @@ body {
 button[data-index] {
   height: 100px;
   width: 100px;
-  // background-color: #f5e8b7;
-  // border-radius: 15px;
-  // border: none;
-  // box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
+  background-color: #f5e8b7;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
   font-size: 80px;
-  // font-weight: 700;
-  line-height: 104px;
+  font-weight: 700;
+  // line-height: 104px;
   &.circle::after {
     content: "Ｏ";
     color: #ff8080;
@@ -278,6 +278,7 @@ button[data-index] {
   display: grid;
 
   grid-template-columns: 1fr 1fr 1fr;
+  font-size: 80px;
 }
 .a {
   height: 100px;

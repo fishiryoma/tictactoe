@@ -39,7 +39,7 @@ function updateScore() {
   // 客製化推特訊息
   twitterBtn.href = `https://twitter.com/intent/tweet?text=OXゲームで${pScore}回勝った、${cScore}回負けた、${tScore}回引き分け...${
     pScore > cScore ? "天才だ❤️" : "だめだ😭"
-  }Link:'https://tictactoe-tess.netlify.app/'`;
+  }@tess_taiwan,Link:'https://tictactoe-tess.netlify.app/'`;
 }
 // DRAW OOXX
 function draw(position, currentStatus) {
@@ -158,6 +158,7 @@ function isWin(positionArr) {
 function whoWin(playerPosition, computerPosition) {
   if (!noEmptyToDraw() && !isWin(playerPosition) && !isWin(computerPosition))
     return false;
+  currentStatus = "over";
   if (noEmptyToDraw()) return "tie";
   if (isWin(playerPosition)) return "win";
   if (isWin(computerPosition)) return "lose";
@@ -183,7 +184,6 @@ function winMessage(msg) {
     message.innerText = "負けた";
     cScore++;
   }
-  currentStatus = "over";
   // 畫連線CSS
   if (winArray.length) {
     document
@@ -244,7 +244,7 @@ chooseFirst.addEventListener("click", function whoFirst(e) {
 
 // GAME EVENT LISTENER
 playground.addEventListener("click", function clickTable(event) {
-  if (event.target.tagName !== "BUTTON") return;
+  if (event.target.tagName !== "BUTTON" || currentStatus === "over") return;
   // 定義區域變數
   let position = +event.target.dataset.index;
   if ([...circlePosition, ...crossPosition].includes(position)) return;

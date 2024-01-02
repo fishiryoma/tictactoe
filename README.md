@@ -13,7 +13,7 @@
 
 ### 井字畫布如何呈現
 
-table、flex、grid 都能達到一樣的效果，在此選擇 Grid 的修改彈性較佳
+table、flex、grid 都能達到一樣的效果，在此選擇 Grid 的修改彈性較佳。
 
 ### 如何判斷輸贏
 
@@ -36,11 +36,11 @@ table、flex、grid 都能達到一樣的效果，在此選擇 Grid 的修改彈
 
 ### 遊戲結束的連線
 
-預先寫好 8 條勝利連線的 HTML element，依照剛剛的 array.entries()在對應的 element 加上效果的 classname
+預先寫好 8 條勝利連線的 HTML element，依照剛剛的 array.entries()在對應的 element 加上效果的 classname。
 
-### 連線的劃線效果的困難點
+### 連線劃線效果的困難點
 
-除了顯示出連線之外，還想做到從左畫到右的效果。
+除了顯示出連線之外，還想做到從左畫到右、上到下的效果。
 
 1. 使用 transition 搭配 transform: scale。
 2. 從 scaleX(0)改變成 scaleX(1)。
@@ -50,9 +50,10 @@ table、flex、grid 都能達到一樣的效果，在此選擇 Grid 的修改彈
 
 ### CSS transition 效果結束後再呼叫遊戲結束畫面
 
-設計上需要如果有贏家產生，則會有 1 秒的連線動畫，若是平手則會直接呼叫遊戲結束畫面。
-可以簡單使用 setTimeout 計算適合呼叫結束畫面的時間，但這邊使用'addEventListener("transitionend")'的方式，在效果結束後自動呼叫下個畫面。
+設計上需要如果有贏家產生，則會有 1 秒的勝利連線動畫，若是平手則會直接呼叫遊戲結束畫面。
+可以簡單使用 setTimeout 計算適合呼叫結束畫面的時間，但這邊同時使用setTimeout跟'addEventListener("transitionend")'的方式，在效果結束後自動呼叫下個畫面。
 並在點擊"AGAIN"之後清除掉 addEventListener。
+setTimeout可以自由添加延遲時間，避免使用者還沒看清楚就跳到下一個畫面。
 
 ### iphone 上 CSS 跑版
 

@@ -165,8 +165,12 @@ function whoWin(playerPosition, computerPosition) {
 }
 
 // 判斷誰贏了並輸出獲勝訊息
-function winMessage(msg) {
-  img.src = `./img/${msg}.png`;
+async function winMessage(msg) {
+  const response = await fetch(`./img/${msg}.png`);
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  // console.log(url);
+  img.src = url;
   // 平手
   if (msg === "tie") {
     message.innerText = "引き分け";

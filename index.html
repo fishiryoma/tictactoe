@@ -17,7 +17,7 @@
       <div id="app">
         <h1>OXゲーム</h1>
         <!-- BOARD -->
-        <div class="playground visible">
+        <div class="playground">
           <button data-index="1"></button>
           <button data-index="2"></button>
           <button data-index="3"></button>
@@ -27,30 +27,29 @@
           <button data-index="7"></button>
           <button data-index="8"></button>
           <button data-index="9"></button>
-          <div data-line="1"></div>
-          <div data-line="2"></div>
-          <div data-line="3"></div>
-          <div data-line="4"></div>
-          <div data-line="5"></div>
-          <div data-line="6"></div>
-          <div data-line="7"></div>
-          <div data-line="8"></div>
+          <div class="line"></div>
         </div>
         <!-- MESSAGE BOX  -->
-        <div class="start-game btn">
-          <p class="title">スタート</p>
-          <p class="text">START</p>
-        </div>
-        <img class="img slideUpDown" src="./img/new_game.png" alt="welcome" />
-        <div class="choose-first visible">
-          <div class="btn player-first">先攻</div>
-          <div class="btn computer-first">後攻</div>
-        </div>
-        <div class="play-again btn visible">
-          <p class="title">もういちど</p>
-          <p class="text">AGAIN</p>
+        <div class="img welcome slideUpDown hidden"></div>
+        <div class="message-box">
+          <!-- 遊戲開始 -->
+          <div class="start-game option">
+            <p class="title">スタート</p>
+            <p class="text">START</p>
+          </div>
+          <!-- 選擇先後攻 -->
+          <div class="choose-first hidden">
+            <p class="player-first option">先攻</p>
+            <p class="computer-first option">後攻</p>
+          </div>
+          <!-- 再玩一次 -->
+          <div class="play-again option hidden">
+            <p class="title">もういちど</p>
+            <p class="text">AGAIN</p>
+          </div>
         </div>
       </div>
+      <!-- 分數統計 -->
       <div class="result_wrap">
         <div class="game_statistic">
           <div class="user_title">

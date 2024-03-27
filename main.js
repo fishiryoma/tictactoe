@@ -32,34 +32,112 @@ const View = {
     messageBox.classList.add("hidden");
     playground.classList.remove("hidden");
   },
+  draw(position, currentStatus) {
+    document
+      .querySelector(`[data-index="${position}"]`)
+      .classList.add(currentStatus);
+  },
+  winMessage(msg) {
+    // 平手
+    if (msg === "tie") {
+      message.innerText = "引き分け";
+      img.classList.add("tie");
+      winArray = [];
+      Module.tScore++;
+      this.showGameOver();
+    }
+    // WIN
+    if (msg === "win") {
+      message.innerText = "勝った";
+      img.classList.add("win");
+      Module.pScore++;
+    }
+    // LOSE
+    if (msg === "lose") {
+      message.innerText = "負けた";
+      img.classList.add("lose");
+      Module.cScore++;
+    }
+    // 畫連線CSS
+    if (Module.winArray.length) {
+      console.log(Module.winArray);
+      drawLine.classList.add(`line${Module.winArray[0] + 1}`);
+      drawLine.addEventListener("animationend", () => {
+        // 設定setTimeout顯示遊戲結束畫面
+        this.showGameOver();
+      });
+    }
+    this.updateScore();
+  },
+  updateScore() {
+    playerScore.textContent = Module.pScore;
+    computerScore.textContent = Module.cScore;
+    tieScore.textContent = Module.tScore;
+    // 客製化推特訊息
+    twitterBtn.href = `https://twitter.com/intent/tweet?text=OXゲームで${
+      Module.pScore
+    }回勝った、${Module.cScore}回負けた、${Module.tScore}回引き分け...${
+      Module.pScore > Module.cScore ? "天才だ❤️" : "だめだ😭"
+    }@tess_taiwan,Link:'https://tictactoe-tess.netlify.app/'`;
+  },
+  showGameOver() {
+    setTimeout(() => {
+      playground.classList.add("hidden");
+      img.classList.remove("hidden", "slideUpDown");
+      messageBox.classList.remove("hidden");
+      playAgain.classList.remove("hidden");
+      chooseFirst.classList.add("hidden");
+    }, 700);
+  },
+  resetView() {
+    drawLine.className = "line";
+    allDrawBtn.forEach((btn) => (btn.classList = ""));
+    // 回到選擇先後攻畫面
+    img.className = "img welcome slideUpDown";
+    chooseFirst.classList.remove("hidden");
+    playAgain.classList.add("hidden");
+    message.innerText = "OXゲーム";
+  },
 };
 
 const Module = {
   currentStatus: "over",
   circlePosition: [],
   crossPosition: [],
-  playerPosition,
-  computerPosition,
+  firstPlayer: "",
   winArray: [],
   pScore: 0,
   cScore: 0,
   tScore: 0,
-  setGameState() {
-    currentStatus = "circle";
-  },
-  // 電腦下，延遲0.25秒假裝電腦在思考
-  computerAction(playerPosition, computerPosition) {
-    if (noEmptyToDraw()) return;
-    let position = bestPosition(playerPosition, computerPosition);
-    setTimeout(function () {
-      draw(position, currentStatus);
-      let isComputerWin = pushPosition(position, computerPosition);
-      if (!isComputerWin) return;
-      winMessage(isComputerWin);
+  computerAction() {
+    if (this.firstPlayer === "player") {
+      playerPosition = this.circlePosition;
+      computerPosition = this.crossPosition;
+    } else {
+      playerPosition = this.crossPosition;
+      computerPosition = this.circlePosition;
+    }
+    // 如果沒地方下了就結束
+    if (this.noEmptyToDraw()) return;
+
+    let position = this.bestPosition(playerPosition, computerPosition);
+
+    setTimeout(() => {
+      View.draw(position, this.currentStatus);
+      const amIWin = this.pushPosition(position, computerPosition);
+      // 電腦獲勝
+      if (amIWin) View.winMessage("lose");
+      // 平手
+      if (!amIWin && this.noEmptyToDraw()) {
+        View.winMessage("tie");
+      }
     }, 250);
   },
+
   noEmptyToDraw() {
-    if (circlePosition.length + crossPosition.length === 9) return true;
+    if (this.circlePosition.length + this.crossPosition.length === 9) {
+      return true;
+    } else return false;
   },
   // 電腦找出最佳位置
   bestPosition(playerPosition, computerPosition) {
@@ -69,7 +147,14 @@ const Module = {
     );
     // 測試用
     // console.log(emptyPosition);
-
+    function isWin(positionArr) {
+      for (const arr of winCondition.entries()) {
+        if (arr[1].every((num) => positionArr.includes(num))) {
+          return true;
+        }
+      }
+      return false;
+    }
     // 下了就贏的位置
     const winPosition = emptyPosition.filter((num) => {
       const temPosition = [...computerPosition];
@@ -97,6 +182,32 @@ const Module = {
     // console.log(randomNum);
     return emptyPosition[randomNum];
   },
+
+  pushPosition(position, positionArray) {
+    positionArray.push(position);
+    this.playerSwitch();
+    for (const arr of winCondition.entries()) {
+      if (arr[1].every((num) => positionArray.includes(num))) {
+        this.winArray = arr;
+        return true;
+      }
+    }
+    return false;
+  },
+  playerSwitch() {
+    if (this.currentStatus === "circle") {
+      this.currentStatus = "cross";
+    } else {
+      this.currentStatus = "circle";
+    }
+  },
+  resetData() {
+    this.currentStatus = "circle";
+    this.circlePosition = [];
+    this.crossPosition = [];
+    this.winArray = [];
+    this.firstPlayer = "";
+  },
 };
 
 const Controller = {
@@ -108,253 +219,43 @@ const Controller = {
     chooseFirst.addEventListener("click", function whoFirst(e) {
       // 選擇先後攻畫面渲染
       View.choosePlayer();
-      Module.setGameState();
+      Module.currentStatus = "circle";
       // 先攻
-
       if (e.target.classList.contains("player-first")) {
-        playerPosition = circlePosition;
-        computerPosition = crossPosition;
+        Module.firstPlayer = "player";
       }
       // 後攻
       if (e.target.classList.contains("computer-first")) {
-        playerPosition = crossPosition;
-        computerPosition = circlePosition;
-        computerAction(crossPosition, circlePosition);
+        Module.firstPlayer = "computer";
+        computerAction();
       }
+    });
+    playground.addEventListener("click", function clickTable(e) {
+      if (e.target.tagName !== "BUTTON" || Module.currentStatus === "over")
+        return;
+      let position = +e.target.dataset.index;
+      if (
+        [...Module.circlePosition, ...Module.crossPosition].includes(position)
+      )
+        return;
+      // 畫OOXX
+      View.draw(position, Module.currentStatus);
+      if (Module.firstPlayer === "player") {
+        playerPosition = Module.circlePosition;
+      } else playerPosition = Module.crossPosition;
+
+      let isPlayerWin = Module.pushPosition(position, playerPosition);
+      if (!isPlayerWin && Module.noEmptyToDraw()) {
+        View.winMessage("tie");
+      } else if (isPlayerWin) {
+        View.winMessage("win");
+      } else Module.computerAction();
+    });
+    playAgain.addEventListener("click", function playagain() {
+      Module.resetData();
+      View.resetView();
     });
   },
 };
+
 Controller.startGame();
-// let currentStatus = "over";
-// let circlePosition = [];
-// let crossPosition = [];
-// let playerPosition;
-// let computerPosition;
-// let winArray = [];
-// let pScore = 0;
-// let cScore = 0;
-// let tScore = 0;
-
-// 寫入分數
-function updateScore() {
-  playerScore.textContent = pScore;
-  computerScore.textContent = cScore;
-  tieScore.textContent = tScore;
-  // 客製化推特訊息
-  twitterBtn.href = `https://twitter.com/intent/tweet?text=OXゲームで${pScore}回勝った、${cScore}回負けた、${tScore}回引き分け...${
-    pScore > cScore ? "天才だ❤️" : "だめだ😭"
-  }@tess_taiwan,Link:'https://tictactoe-tess.netlify.app/'`;
-}
-
-// DRAW OOXX
-function draw(position, currentStatus) {
-  document
-    .querySelector(`[data-index="${position}"]`)
-    .classList.add(currentStatus);
-}
-
-// 更換目前選手狀態
-function playerSwitch() {
-  if (currentStatus === "circle") {
-    return (currentStatus = "cross");
-  } else {
-    return (currentStatus = "circle");
-  }
-}
-
-// 重置遊戲
-function reset() {
-  // 重置資料內容
-  currentStatus = "circle";
-  circlePosition = [];
-  crossPosition = [];
-  playerPosition = [];
-  computerPosition = [];
-  drawLine.className = "line";
-  allDrawBtn.forEach((btn) => (btn.classList = ""));
-  // 回到選擇先後攻畫面
-  img.className = "img welcome slideUpDown";
-  chooseFirst.classList.remove("hidden");
-  playAgain.classList.add("hidden");
-  message.innerText = "OXゲーム";
-  winArray = [];
-}
-
-function createLine() {
-  if (!winArray.length) return;
-  drawLine.classList.add(`line${winArray[0] + 1}`);
-}
-
-// 畫完連線後顯示遊戲結束畫面
-function showGameOver() {
-  setTimeout(() => {
-    playground.classList.add("hidden");
-    img.classList.remove("hidden", "slideUpDown");
-    messageBox.classList.remove("hidden");
-    playAgain.classList.remove("hidden");
-    chooseFirst.classList.add("hidden");
-  }, 700);
-}
-
-// // 電腦找出最佳位置
-// function bestPosition(playerPosition, computerPosition) {
-//   const allPosition = [...playerPosition, ...computerPosition];
-//   const emptyPosition = Array.from(Array(9).keys(), (e) => e + 1).filter(
-//     (num) => !allPosition.includes(num)
-//   );
-//   // 測試用
-//   // console.log(emptyPosition);
-
-//   // 下了就贏的位置
-//   const winPosition = emptyPosition.filter((num) => {
-//     const temPosition = [...computerPosition];
-//     temPosition.push(num);
-//     if (isWin(temPosition)) return num;
-//   });
-
-//   // 不下就輸的位置
-//   const defensePostion = emptyPosition.filter((num) => {
-//     const temPosition = [...playerPosition];
-//     temPosition.push(num);
-//     if (isWin(temPosition)) return num;
-//   });
-//   // 判斷要return下了就贏還是不下就輸的位置
-//   if (winPosition.length) return winPosition[0];
-//   if (!winPosition.length && defensePostion.length) return defensePostion[0];
-
-//   // 測試用
-//   // console.log(winPosition, defensePostion);
-
-//   // 中間如果是空的就先return中間
-//   if (!allPosition.includes(5)) return 5;
-//   // 隨機挑一個位置
-//   const randomNum = Math.floor(Math.random() * emptyPosition.length);
-//   // console.log(randomNum);
-//   return emptyPosition[randomNum];
-// }
-
-// 確認是否已沒空位可下
-// function noEmptyToDraw() {
-//   if (circlePosition.length + crossPosition.length === 9) return true;
-// }
-
-// 是否符合獲勝條件
-function isWin(positionArr) {
-  for (const arr of winCondition.entries()) {
-    if (arr[1].every((num) => positionArr.includes(num))) {
-      winArray = arr;
-      return true;
-    }
-  }
-  return false;
-}
-
-function whoWin(playerPosition, computerPosition) {
-  if (!noEmptyToDraw() && !isWin(playerPosition) && !isWin(computerPosition))
-    return false;
-  currentStatus = "over";
-  if (noEmptyToDraw()) return "tie";
-  if (isWin(playerPosition)) return "win";
-  if (isWin(computerPosition)) return "lose";
-}
-
-// 判斷誰贏了並輸出獲勝訊息
-function winMessage(msg) {
-  // 平手
-  if (msg === "tie") {
-    message.innerText = "引き分け";
-    img.classList.add("tie");
-    winArray = [];
-    tScore++;
-    showGameOver();
-  }
-  // WIN
-  if (msg === "win") {
-    message.innerText = "勝った";
-    img.classList.add("win");
-    pScore++;
-  }
-  // LOSE
-  if (msg === "lose") {
-    message.innerText = "負けた";
-    img.classList.add("lose");
-    cScore++;
-  }
-  // 畫連線CSS
-  console.log(winArray);
-  if (winArray.length) {
-    drawLine.addEventListener("animationend", () => {
-      // 設定setTimeout顯示遊戲結束畫面
-      showGameOver();
-    });
-  }
-  createLine();
-  updateScore();
-}
-
-// 將位置推入陣列並確認是否有輸贏
-function pushPosition(position, positionArray) {
-  positionArray.push(position);
-  playerSwitch();
-  return whoWin(playerPosition, computerPosition);
-}
-
-// // 電腦下，延遲0.25秒假裝電腦在思考
-// function computerAction(playerPosition, computerPosition) {
-//   if (noEmptyToDraw()) return;
-//   let position = bestPosition(playerPosition, computerPosition);
-//   setTimeout(function () {
-//     draw(position, currentStatus);
-//     let isComputerWin = pushPosition(position, computerPosition);
-//     if (!isComputerWin) return;
-//     winMessage(isComputerWin);
-//   }, 250);
-// }
-
-// ---EVENT LISTENER----
-// start.addEventListener("click", function () {
-//   // 渲染開始畫面
-//   start.classList.add("hidden");
-//   chooseFirst.classList.remove("hidden");
-//   currentStatus = "circle";
-// });
-
-// chooseFirst.addEventListener("click", function whoFirst(e) {
-//   // 選擇先後攻畫面渲染
-//   img.classList.add("hidden");
-//   messageBox.classList.add("hidden");
-//   playground.classList.remove("hidden");
-//   // 先攻
-//   if (e.target.classList.contains("player-first")) {
-//     playerPosition = circlePosition;
-//     computerPosition = crossPosition;
-//   }
-//   // 後攻
-//   if (e.target.classList.contains("computer-first")) {
-//     playerPosition = crossPosition;
-//     computerPosition = circlePosition;
-//     computerAction(crossPosition, circlePosition);
-//   }
-// });
-
-// GAME EVENT LISTENER
-playground.addEventListener("click", function clickTable(event) {
-  if (event.target.tagName !== "BUTTON" || currentStatus === "over") return;
-  // 定義區域變數
-  let position = +event.target.dataset.index;
-  if ([...circlePosition, ...crossPosition].includes(position)) return;
-  // 畫OOXX
-  draw(position, currentStatus);
-  // 將位置推入陣列並驗證是否有贏家
-  let isPlayerWin = pushPosition(position, playerPosition);
-  if (!isPlayerWin) {
-    // 若無，則換電腦繼續下
-    return computerAction(playerPosition, computerPosition);
-  }
-  // 若有，遊戲結束、呼叫結束畫面
-  winMessage(isPlayerWin);
-});
-
-playAgain.addEventListener("click", function playagain() {
-  reset();
-});

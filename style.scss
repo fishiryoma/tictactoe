@@ -38,11 +38,9 @@ body {
 #app {
   width: 380px;
   padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border-radius: 15px;
   box-shadow: 0 1px 8px rgb(50, 50, 45, 0.3);
+  text-align: center;
   position: relative;
   h1 {
     color: #32322d;
@@ -52,11 +50,18 @@ body {
   &:hover {
     box-shadow: 0 2px 16px rgb(50, 50, 45, 0.1);
   }
+  .board {
+    width: 100%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .playground {
   max-width: 310px;
-  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -68,7 +73,7 @@ body {
     background-color: #f5e8b7;
     border-radius: 15px;
     border: none;
-    box-shadow: 1px 1px 4px rgb(50, 50, 45, 0.4);
+    box-shadow: 2px 2px 4px rgb(50, 50, 45, 0.6);
     // font-size: 80px;
     font-weight: 700;
     line-height: 104px;
@@ -85,6 +90,10 @@ body {
     &:hover {
       box-shadow: 1px 1px 8px rgb(50, 50, 45, 0.1);
     }
+    &.circle,
+    &.cross {
+      box-shadow: 1px 1px 8px rgb(50, 50, 45, 0.1);
+    }
   }
 }
 
@@ -98,8 +107,7 @@ body {
       transform: translateY(20px);
     }
   }
-  width: 300px;
-  height: 300px;
+  width: 100%;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -112,18 +120,20 @@ body {
   }
   &.win {
     background-image: url("./img/win.png");
+    background-size: 75%;
   }
   &.lose {
     background-image: url("./img/lose.png");
+    background-size: 75%;
   }
   &.tie {
     background-image: url("./img/tie.png");
+    background-size: 75%;
   }
 }
 
 // 遊戲選項
 .message-box {
-  height: 80px;
   text-align: center;
   color: #375256;
   font-size: 32px;
@@ -134,10 +144,29 @@ body {
   }
 
   transition: color 0.2s ease-out;
-  .option:hover {
+  .option:hover,
+  .option:active {
     color: rgb(243, 250, 251);
   }
+  .clickMsg {
+    @keyframes blink {
+      0% {
+        opacity: 1;
+        color: rgb(243, 250, 251);
+      }
+      50% {
+        opacity: 0;
+        color: rgb(243, 250, 251);
+      }
+      100% {
+        opacity: 1;
+        color: rgb(243, 250, 251);
+      }
+    }
+    animation: blink 0.2s 3;
+  }
 }
+
 .hidden {
   display: none;
 }
@@ -207,16 +236,25 @@ body {
 }
 
 // 對角線7~8
-@mixin crossLineStyle($deg, $left, $right, $transform-origin: left) {
-  @keyframes drawLine7 {
-    0% {
-      transform: rotate($deg) scaleX(0);
-    }
-
-    100% {
-      transform: rotate($deg) scaleX(1);
-    }
+@keyframes drawCrossLine7 {
+  0% {
+    transform: rotate(45deg) scaleX(0);
   }
+
+  100% {
+    transform: rotate(45deg) scaleX(1);
+  }
+}
+@keyframes drawCrossLine8 {
+  0% {
+    transform: rotate(-45deg) scaleX(0);
+  }
+
+  100% {
+    transform: rotate(-45deg) scaleX(1);
+  }
+}
+@mixin crossLineStyle($left, $right, $transform-origin) {
   position: absolute;
   background-color: #fcc419;
   border-radius: 15px;
@@ -225,14 +263,14 @@ body {
   right: $right;
   top: 45px;
   transform-origin: $transform-origin;
-  transform: rotate($deg);
-  animation: drawLine7 1s forwards;
 }
 .line7 {
-  @include crossLineStyle(45deg, 45px, -40px);
+  @include crossLineStyle(45px, -40px, left);
+  animation: drawCrossLine7 1s forwards;
 }
 .line8 {
-  @include crossLineStyle(-45deg, -40px, 45px, right);
+  @include crossLineStyle(-40px, 45px, right);
+  animation: drawCrossLine8 1s forwards;
 }
 
 // 勝負統計表格

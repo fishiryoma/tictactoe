@@ -2,6 +2,8 @@ const playground = document.querySelector(".playground");
 const message = document.querySelector("h1");
 const start = document.querySelector(".start-game");
 const chooseFirst = document.querySelector(".choose-first");
+const playerFirst = document.querySelector(".player-first");
+const computerFirst = document.querySelector(".computer-first");
 const img = document.querySelector(".img");
 const messageBox = document.querySelector(".message-box");
 const playAgain = document.querySelector(".play-again");
@@ -24,13 +26,38 @@ const winCondition = [
 
 const View = {
   enterStart() {
-    start.classList.add("hidden");
-    chooseFirst.classList.remove("hidden");
+    start.classList.add("clickMsg");
+    start.addEventListener("animationend", () => {
+      setTimeout(() => {
+        start.classList.add("hidden");
+        chooseFirst.classList.remove("hidden");
+        start.classList.remove("clickMsg");
+      }, 250);
+    });
   },
-  choosePlayer() {
-    img.classList.add("hidden");
-    messageBox.classList.add("hidden");
-    playground.classList.remove("hidden");
+  choosePlayer(firstPlayer) {
+    if (firstPlayer) {
+      playerFirst.classList.add("clickMsg");
+      playerFirst.addEventListener("animationend", () => {
+        setTimeout(() => {
+          toPlayground();
+          playerFirst.classList.remove("clickMsg");
+        }, 250);
+      });
+    } else {
+      computerFirst.classList.add("clickMsg");
+      computerFirst.addEventListener("animationend", () => {
+        setTimeout(() => {
+          toPlayground();
+          computerFirst.classList.remove("clickMsg");
+        }, 250);
+      });
+    }
+    function toPlayground() {
+      img.classList.add("hidden");
+      messageBox.classList.add("hidden");
+      playground.classList.remove("hidden");
+    }
   },
   draw(position, currentStatus) {
     document
@@ -93,10 +120,16 @@ const View = {
     drawLine.className = "line";
     allDrawBtn.forEach((btn) => (btn.classList = ""));
     // 回到選擇先後攻畫面
-    img.className = "img welcome slideUpDown";
-    chooseFirst.classList.remove("hidden");
-    playAgain.classList.add("hidden");
-    message.innerText = "OXゲーム";
+    playAgain.classList.add("clickMsg");
+    playAgain.addEventListener("animationend", () => {
+      setTimeout(() => {
+        playAgain.classList.remove("clickMsg");
+        playAgain.classList.add("hidden");
+        chooseFirst.classList.remove("hidden");
+        img.className = "img welcome slideUpDown";
+        message.innerText = "OXゲーム";
+      }, 250);
+    });
   },
 };
 
@@ -131,7 +164,7 @@ const Module = {
       if (!amIWin && this.noEmptyToDraw()) {
         View.winMessage("tie");
       }
-    }, 250);
+    }, 150);
   },
 
   noEmptyToDraw() {
@@ -218,7 +251,8 @@ const Controller = {
     });
     chooseFirst.addEventListener("click", function whoFirst(e) {
       // 選擇先後攻畫面渲染
-      View.choosePlayer();
+      const player = e.target.classList.contains("player-first");
+      View.choosePlayer(player);
       Module.currentStatus = "circle";
       // 先攻
       if (e.target.classList.contains("player-first")) {
@@ -230,6 +264,7 @@ const Controller = {
         computerAction();
       }
     });
+
     playground.addEventListener("click", function clickTable(e) {
       if (e.target.tagName !== "BUTTON" || Module.currentStatus === "over")
         return;
@@ -251,6 +286,7 @@ const Controller = {
         View.winMessage("win");
       } else Module.computerAction();
     });
+
     playAgain.addEventListener("click", function playagain() {
       Module.resetData();
       View.resetView();

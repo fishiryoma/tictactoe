@@ -45,7 +45,7 @@ table、flex、grid 都能達到一樣的效果，在此選擇 Grid 的修改彈
 
 除了顯示出連線之外，還想做到從左畫到右的效果。
 
-1. 比起使用 transition keyframe 有更高的彈性。
+1. 比起使用 transition, keyframes 有更高的彈性。
 2. transform 中 scale 與 rotate 排列的順序會影響呈現的效果。必須先 rotate 再 scale 才能達到效果
 
 ![gameOver](./img/screen_game.png)
@@ -61,7 +61,7 @@ iOS 系統在 iphone 有一些無法預料的預設值，只能慢慢的 try & e
 
 ### Twitter 分享按鈕
 
-推特提供了多種與推特連動的方法，本次只需要將遊戲結果讓使用者發上推特，使用官方推出的特定連結，依照固定格式即可輕鬆連接。
+推特提供了多種與推特連動的方法，本次只需要將遊戲結果讓使用者發上推特，查閱官方文件，依照固定格式即可輕鬆與推特連接。
 
 ## 使用工具
 
